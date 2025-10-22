@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router';
 import Header from '../components/Header';
+import Slider from '../components/slider';
 
 const HomeLayout = () => {
     return (
@@ -10,6 +11,7 @@ const HomeLayout = () => {
             </header>
             <main>
                 <section>
+                <Slider ></Slider>
                     <Outlet></Outlet>
                 </section>
             </main>

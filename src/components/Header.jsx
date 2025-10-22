@@ -60,19 +60,19 @@ const Header = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 ">
               <li className="text-[#f72585] hover:text-[#ebc034]">
-                <Link>Home</Link>
+                <Link to="/">Home</Link>
               </li>
               <li className="text-[#f72585] hover:text-[#ebc034]">
-                <Link>About Us</Link>
+                <Link to="/aboutus">About Us</Link>
               </li>
               <li className="text-[#f72585] hover:text-[#ebc034]">
-                <Link>Blog</Link>
+                <Link to="/blog">Blog</Link>
               </li>
               <li className="text-[#f72585] hover:text-[#ebc034]">
-                <Link>Contact</Link>
+                <Link to="/contact">Contact</Link>
               </li>
               <li className="text-[#f72585] hover:text-[#ebc034]">
-                <Link>Track Order</Link>
+                <Link to="/livetrack">Track Order</Link>
               </li>
             </ul>
           </div>
@@ -90,7 +90,7 @@ const Header = () => {
                 />
               </div>
             </div>
-            <Link className="btn">Login</Link>
+            <Link to='/login' className="btn">Login</Link>
           </div>
         </div>
       </div>

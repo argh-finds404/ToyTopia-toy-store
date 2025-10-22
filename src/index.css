@@ -8,4 +8,6 @@
       font-family: "Nunito", sans-serif;
     }
 
-    
+ a.active{
+  @apply bg-[#d00000]
+ }   
