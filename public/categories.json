@@ -1,0 +1,13 @@
+[
+  { "id": 1, "name": "Transformers" },
+  { "id": 2, "name": "Hot Wheels" },
+  { "id": 3, "name": "Lego Sets" },
+  { "id": 4, "name": "Barbie & Dolls" },
+  { "id": 5, "name": "UNO & Card Games" },
+  { "id": 6, "name": "Excavator & Construction" },
+  { "id": 7, "name": "RC Cars & Drones" },
+  { "id": 8, "name": "Educational Toys" },
+  { "id": 9, "name": "Christmas & Gifts" },
+  { "id": 10, "name": "Pokemon & Anime" },
+  { "id": 11, "name": "Minecraft Games" }
+]
