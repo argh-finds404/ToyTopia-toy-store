@@ -27,7 +27,7 @@ const ToysDetailsMain = () => {
     );
   }
 
-  // Increase quantity (updates dial and decreases stock)
+
   const increaseQuantity = () => {
     if (availableQuantity > 0) {
       setQuantity(quantity + 1);
@@ -35,7 +35,7 @@ const ToysDetailsMain = () => {
     }
   };
 
-  // Decrease quantity (updates dial and restores stock)
+
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -48,7 +48,7 @@ const ToysDetailsMain = () => {
       position: "top-center",
       autoClose: 2000,
     });
-    setQuantity(1); // reset dial
+    setQuantity(1); 
   };
 
   const handleBuyNow = () => {
@@ -107,7 +107,7 @@ const ToysDetailsMain = () => {
                 </p>
               </div>
 
-              {/* Quantity + Buttons */}
+             
               <div className="mt-6 flex flex-col space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center border rounded-lg overflow-hidden">
@@ -179,7 +179,6 @@ const ToysDetailsMain = () => {
               </div>
             </div>
 
-            {/* Full-width Back Button */}
             <button
               onClick={() => navigate(-1)}
               className="w-full flex items-center justify-center gap-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95 mt-4"
