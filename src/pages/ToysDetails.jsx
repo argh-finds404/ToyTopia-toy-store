@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { FaRegCircleCheck } from "react-icons/fa6";
-import { FaChildren } from "react-icons/fa6";
+import { FaRegCircleCheck, FaChildren } from "react-icons/fa6";
 import { FaShippingFast } from "react-icons/fa";
+import { Helmet } from "react-helmet-async"; 
 
 const ToysDetailsMain = () => {
   const { id } = useParams();
@@ -27,14 +27,12 @@ const ToysDetailsMain = () => {
     );
   }
 
-
   const increaseQuantity = () => {
     if (availableQuantity > 0) {
       setQuantity(quantity + 1);
       setAvailableQuantity(availableQuantity - 1);
     }
   };
-
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -48,11 +46,11 @@ const ToysDetailsMain = () => {
       position: "top-center",
       autoClose: 2000,
     });
-    setQuantity(1); 
+    setQuantity(1);
   };
 
   const handleBuyNow = () => {
-    toast.info("Buy it now clicked!", {
+    toast.info("Try now clicked!", {
       position: "top-center",
       autoClose: 2000,
     });
@@ -60,6 +58,15 @@ const ToysDetailsMain = () => {
 
   return (
     <>
+      {/* ✅ Dynamic Title */}
+      <Helmet>
+        <title>{`${toy.subCategory} | ${toy.toyName} - ToyStore`}</title>
+        <meta
+          name="description"
+          content={toy.description.slice(0, 120) + "..."}
+        />
+      </Helmet>
+
       <Header />
       <main className="max-w-6xl mx-auto my-16 px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
@@ -107,7 +114,7 @@ const ToysDetailsMain = () => {
                 </p>
               </div>
 
-             
+              {/* Quantity Controls + Buttons */}
               <div className="mt-6 flex flex-col space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center border rounded-lg overflow-hidden">
@@ -130,7 +137,7 @@ const ToysDetailsMain = () => {
 
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
+                    className="flex-1 bg-[#c9184a] hover:bg-red-500 text-white font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
                     disabled={
                       quantity > availableQuantity + quantity - 1 ||
                       availableQuantity <= 0
@@ -141,9 +148,9 @@ const ToysDetailsMain = () => {
 
                   <button
                     onClick={handleBuyNow}
-                    className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
+                    className="flex-1 bg-yellow-300 hover:bg-yellow-500 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
                   >
-                    BUY IT NOW
+                    TRY NOW
                   </button>
                 </div>
 
@@ -184,7 +191,7 @@ const ToysDetailsMain = () => {
               className="w-full flex items-center justify-center gap-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95 mt-4"
             >
               <IoMdArrowRoundBack size={20} />
-              Back to these toys category
+              Back to this toys category
             </button>
           </div>
         </div>

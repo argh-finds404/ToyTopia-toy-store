@@ -6,10 +6,13 @@ import ShopInfo from '../components/ShopInfo';
 import LeftAside from '../components/homelayout/Topside';
 import Topside from '../components/homelayout/Topside';
 import Footer from '../components/Footer';
-
+import { Helmet } from "react-helmet-async";
 const HomeLayout = () => {
     return (
       <div className="bg-[#fafaff] min-h-screen">
+        <Helmet>
+          <title>ToyTopia-Home</title>
+        </Helmet>
         <header className="max-w-16/16 mx-auto">
           <Header></Header>
         </header>

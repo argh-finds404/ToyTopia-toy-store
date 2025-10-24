@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser, setUser } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
+  const [nameError, setNameError] = useState("");
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   const handlePasswordChange = (e) => {
@@ -32,10 +34,19 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
+    const name = e.target.name.value.trim();
     const email = e.target.email.value;
     const photo = e.target.photo.value;
 
+    // Name validation
+    if (name.length < 5) {
+      setNameError("Name must be at least 5 characters long.");
+      return;
+    } else {
+      setNameError(""); // clear previous error
+    }
+
+    // Password validation
     if (!passwordRegex.test(password)) {
       setPasswordMessage(
         "Password must have at least one uppercase, one lowercase, and be at least 6 characters long."
@@ -49,7 +60,6 @@ const Register = () => {
         setUser(user);
         setPasswordMessage("");
 
-       
         toast.success("Account created successfully!", {
           position: "top-center",
           autoClose: 2000,
@@ -57,8 +67,6 @@ const Register = () => {
       })
       .catch((error) => {
         setPasswordMessage(error.message);
-
-       
         toast.error(error.message, {
           position: "top-center",
           autoClose: 3000,
@@ -68,6 +76,11 @@ const Register = () => {
 
   return (
     <div className={styles.registerContainer}>
+      {/* Dynamic page title */}
+      <Helmet>
+        <title>Registration</title>
+      </Helmet>
+      
       <div className={styles.registerCard}>
         <div className={styles.registerHeader}>
           <div className={styles.materialLogo}>
@@ -89,6 +102,14 @@ const Register = () => {
               <label htmlFor="name">Full Name</label>
               <span className={styles.inputLine}></span>
             </div>
+            {nameError && (
+              <p
+                className={styles.passwordWarning}
+                style={{ color: "#e53935" }}
+              >
+                {nameError}
+              </p>
+            )}
           </div>
 
           {/* Email */}
@@ -123,7 +144,6 @@ const Register = () => {
               <label htmlFor="password">Password</label>
               <span className={styles.inputLine}></span>
             </div>
-            {/* Dynamic password message */}
             {passwordMessage && (
               <p
                 className={styles.passwordWarning}

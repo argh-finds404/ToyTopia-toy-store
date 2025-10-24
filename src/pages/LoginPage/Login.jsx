@@ -1,14 +1,16 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
 import styles from "./Login.module.css";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { logIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -27,6 +29,8 @@ const Login = () => {
           pauseOnHover: true,
           draggable: true,
         });
+
+        navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -35,11 +39,13 @@ const Login = () => {
           autoClose: 3000,
         });
       });
-
   };
 
   return (
     <div className={styles.loginContainer}>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
           <div className={styles.materialLogo}>
@@ -73,7 +79,7 @@ const Login = () => {
           <div className={styles.formGroup}>
             <div className={`${styles.inputWrapper} ${styles.passwordWrapper}`}>
               <input
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 required
