@@ -7,7 +7,7 @@ const CategoriesToys = () => {
   const data = useLoaderData();
   const [categoryToys, setCategoryToys] = useState([]);
   const [loading, setLoading] = useState(true); // 👈 Step 1: track loading state
-
+  
   useEffect(() => {
     setLoading(true); // start loading
     setTimeout(() => {
@@ -84,7 +84,7 @@ const CategoriesToys = () => {
               </div>
 
               <Link
-                to={`/toys/${toy.toyId}`}
+                to={`/toys-details/${toy.toyId}`}
                 className="absolute bottom-2 sm:bottom-5 left-1/2 -translate-x-1/2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition duration-300 text-white bg-[#4062bb] hover:bg-[#42a5f5] active:scale-95 px-4 py-2 rounded-lg font-semibold shadow-md"
               >
                 Read More
