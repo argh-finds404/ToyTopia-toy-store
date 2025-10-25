@@ -6,7 +6,7 @@ ToyTopia is a modern, user-friendly web application built for toy lovers and par
 
 ## 🌐 Live Demo
 
-👉 **Live URL:**: 
+👉 **Live URL:**: https://toytopia-spa.web.app
 
 
 ---
@@ -53,6 +53,12 @@ The main objectives of this project are to:
 - Dynamic page titles with **React Helmet Async**.
 - Scrolling text banners using **React Fast Marquee**.
 
+
+
+✅ **Valid Links**
+- Only the **Home** and **Wishlist** are validate for navlink
+- rest of the links are dummy in navbar
+
 ---
 
 ## 🧩 Tech Stack & NPM Packages Used
@@ -60,7 +66,7 @@ The main objectives of this project are to:
 | Category | Packages / Tools |
 |-----------|------------------|
 | **Frontend** | React, React Router DOM |
-| **UI Frameworks** | Tailwind CSS, DaisyUI |
+| **UI Frameworks** | Tailwind CSS, DaisyUI, Vanilla CSS |
 | **Icons & Effects** | React Icons, React Fast Marquee |
 | **Authentication & Database** | Firebase (Email/Pass + Google Auth) |
 | **Context & State Management** | React Context API (AuthProvider) |
@@ -107,6 +113,12 @@ npm run dev
 5.Visit your local app:
 
 http://localhost:5173
+
+
+
+6.live preview:
+![alt text](image-2.png)
+
 
 
 📜 License
