@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaRegCircleCheck, FaChildren } from "react-icons/fa6";
 import { FaShippingFast } from "react-icons/fa";
-import { Helmet } from "react-helmet-async"; 
+import { Helmet } from "react-helmet-async";
 
 const ToysDetails = () => {
   const { id } = useParams();
@@ -18,6 +18,21 @@ const ToysDetails = () => {
   const [availableQuantity, setAvailableQuantity] = useState(
     toy?.availableQuantity || 0
   );
+
+  // Try Now Form
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleTryNowSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !email) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    toast.success("Try Now request submitted successfully!");
+    setName("");
+    setEmail("");
+  };
 
   if (!toy) {
     return (
@@ -49,16 +64,8 @@ const ToysDetails = () => {
     setQuantity(1);
   };
 
-  const handleBuyNow = () => {
-    toast.info("Try now clicked!", {
-      position: "top-center",
-      autoClose: 2000,
-    });
-  };
-
   return (
     <>
-      {/* ✅ Dynamic Title */}
       <Helmet>
         <title>{`${toy.subCategory} | ${toy.toyName} - ToyStore`}</title>
         <meta
@@ -114,7 +121,7 @@ const ToysDetails = () => {
                 </p>
               </div>
 
-              {/* Quantity Controls + Buttons */}
+              {/* Quantity Controls + Add to Cart */}
               <div className="mt-6 flex flex-col space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center border rounded-lg overflow-hidden">
@@ -145,13 +152,6 @@ const ToysDetails = () => {
                   >
                     ADD TO CART
                   </button>
-
-                  <button
-                    onClick={handleBuyNow}
-                    className="flex-1 bg-yellow-300 hover:bg-yellow-500 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
-                  >
-                    TRY NOW
-                  </button>
                 </div>
 
                 {/* Info Boxes */}
@@ -174,6 +174,40 @@ const ToysDetails = () => {
                       FREE <br /> SHIPPING
                     </p>
                   </div>
+                </div>
+
+                {/* Try Now Form */}
+                <div className="mt-6 bg-gray-50 p-6 rounded-2xl shadow-inner">
+                  <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">
+                    Try Now
+                  </h2>
+                  <form
+                    onSubmit={handleTryNowSubmit}
+                    className="flex flex-col gap-4 max-w-md mx-auto"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[#1976d2]"
+                      required
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[#1976d2]"
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="bg-[#1976d2] text-white rounded-lg py-3 font-semibold hover:bg-[#1565c0] transition-colors"
+                    >
+                      Try Now
+                    </button>
+                  </form>
                 </div>
               </div>
 

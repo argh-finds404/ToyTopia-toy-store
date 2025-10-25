@@ -7,10 +7,11 @@ import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { logIn, setUser } = useContext(AuthContext);
+  const { logIn, setUser, signInWithGoogle } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Email/password login
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -19,17 +20,28 @@ const Login = () => {
     logIn(email, password)
       .then((res) => {
         setUser(res.user);
-
         toast.success("Login successful! Welcome back.", {
           position: "top-center",
           autoClose: 2000,
         });
-
         navigate(location.state?.from?.pathname || "/");
       })
       .catch((error) => {
         toast.error(error.message, { position: "top-center", autoClose: 3000 });
       });
+  };
+
+  // Google Sign-In
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(() => {
+        toast.success("Logged in with Google!", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+        navigate(location.state?.from?.pathname || "/");
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   return (
@@ -148,7 +160,11 @@ const Login = () => {
 
         {/* Social Login Buttons */}
         <div className={styles.socialLogin}>
-          <button type="button" className={styles.socialBtn}>
+          <button
+            type="button"
+            className={styles.socialBtn}
+            onClick={handleGoogleLogin}
+          >
             <div className={styles.socialRipple}></div>
             <div className={styles.socialIcon}>
               <svg viewBox="0 0 24 24">

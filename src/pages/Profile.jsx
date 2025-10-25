@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -12,6 +11,11 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  // Set static page title
+  useEffect(() => {
+    document.title = "My Profile";
+  }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -34,17 +38,12 @@ const Profile = () => {
     setIsEditing(false);
   };
 
-  // Handle image error
   const handleImageError = (e) => {
     e.target.src = "https://via.placeholder.com/100";
   };
 
   return (
     <div className="max-w-lg mx-auto my-10 bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
-      <Helmet>
-        <title>My Profile</title>
-      </Helmet>
-
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-center text-white">
         <div className="relative w-28 h-28 mx-auto mb-4">
@@ -112,9 +111,7 @@ const Profile = () => {
                     src={photoURL}
                     alt="Preview"
                     className="w-16 h-16 rounded-full object-cover border"
-                    onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/100";
-                    }}
+                    onError={handleImageError}
                   />
                 </div>
               )}

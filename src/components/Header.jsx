@@ -2,19 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/newLogo.png";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaHome, FaHeart } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
 import { BiLogoBlogger } from "react-icons/bi";
 import {
   MdPermContactCalendar,
   MdOutlineTrackChanges,
   MdOutlineLogin,
+  MdOutlineFavorite,
 } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { AuthContext } from "../Provider/AuthProvider";
 import { db } from "../firebase/firebase.config";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { MdOutlineFavorite } from "react-icons/md";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -46,6 +46,7 @@ const Header = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-sm max-w-11/12 mx-auto px-6 rounded-2xl relative">
+      {/* Left - Logo */}
       <div className="navbar-start">
         <img
           className="w-[80px] h-[50px] object-cover bg-white"
@@ -54,6 +55,7 @@ const Header = () => {
         />
       </div>
 
+      {/* Center - Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal gap-4">
           <li>
@@ -94,17 +96,28 @@ const Header = () => {
         </ul>
       </div>
 
+      {/* Right - User / Auth */}
       <div className="navbar-end flex items-center gap-2 relative">
         {user ? (
           <>
-            <Link to="/profile" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full border-2 border-blue-500">
-                <img
-                  alt="Avatar"
-                  src={user.photoURL || "https://via.placeholder.com/100"}
-                />
+            {/* Avatar with hover name */}
+            <div className="relative group">
+              <Link to="/profile" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full border-2 border-blue-500">
+                  <img
+                    alt="Avatar"
+                    src={user.photoURL || "https://via.placeholder.com/100"}
+                  />
+                </div>
+              </Link>
+
+              {/* Hover tooltip */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm py-1 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md">
+                {user.displayName || "User"}
               </div>
-            </Link>
+            </div>
+
+            {/* Logout Button */}
             <button
               onClick={handleLogOut}
               className="btn bg-[#ef233c] text-[#edf2f4] flex items-center gap-1"

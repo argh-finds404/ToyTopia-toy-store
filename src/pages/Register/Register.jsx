@@ -7,12 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet-async";
 
 const Register = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, signInWithGoogle } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [nameError, setNameError] = useState("");
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
@@ -53,11 +53,24 @@ const Register = () => {
       .catch((err) => toast.error(err.message));
   };
 
+  const handleGoogleRegister = () => {
+    signInWithGoogle()
+      .then(() => {
+        toast.success("Signed up with Google!", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+        navigate("/");
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   return (
     <div className={styles.registerContainer}>
       <Helmet>
         <title>Register</title>
       </Helmet>
+
       <div className={styles.registerCard}>
         {/* Material Design Logo */}
         <div className={styles.materialLogo}>
@@ -102,7 +115,7 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Password - Fixed with proper wrapper */}
+          {/* Password */}
           <div className={styles.formGroup}>
             <div
               className={styles.inputWrapper}
@@ -115,7 +128,7 @@ const Register = () => {
                 value={password}
                 onChange={handlePasswordChange}
                 required
-                style={{ paddingRight: "50px" }} // Add padding for the eye icon
+                style={{ paddingRight: "50px" }}
               />
               <label htmlFor="password">Password</label>
               <div className={styles.inputLine}></div>
@@ -164,7 +177,11 @@ const Register = () => {
 
         {/* Social Login Buttons */}
         <div className={styles.socialLogin}>
-          <button type="button" className={styles.socialBtn}>
+          <button
+            type="button"
+            className={styles.socialBtn}
+            onClick={handleGoogleRegister}
+          >
             <div className={styles.socialIcon}>
               <svg viewBox="0 0 24 24">
                 <path
