@@ -1,16 +1,121 @@
-# React + Vite
+# 🧸 ToyTopia — A Kids Toy Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ToyTopia is a modern, user-friendly web application built for toy lovers and parents. It allows users to browse, explore, and shop for toys across various categories. The platform integrates user authentication, wishlist management, and smooth navigation to deliver a delightful shopping experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## React Compiler
+👉 **Live URL:**: 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎯 Project Purpose
+
+ToyTopia is designed to showcase a **full-stack React web application** using Firebase for authentication and data storage.  
+The main objectives of this project are to:
+- Provide a simple and attractive toy marketplace UI.
+- Implement secure user authentication (Email/Password + Google login).
+- Allow users to **add/remove toys to their wishlist**.
+- Demonstrate responsive, reusable React components and routes.
+- Use Firebase and environment variables for secure, scalable integration.
+
+---
+
+## ⚙️ Key Features
+
+✅ **User Authentication**
+- Login and Register with Email & Password.
+- Google Sign-In using Firebase Authentication.
+- Protected routes (accessible only for logged-in users).
+
+✅ **Wishlist Management**
+- Add or remove toys from wishlist.
+- Wishlist data stored securely in Firestore.
+- Heart icon toggles instantly on click.
+
+✅ **Dynamic Toy Catalog**
+- Browse toys by categories and subcategories.
+- See detailed product descriptions.
+- "Read More" navigation to toy details page.
+
+✅ **Responsive Design**
+- Built with **Tailwind CSS** and **DaisyUI**.
+- Fully mobile-friendly, tablet, and desktop optimized.
+
+✅ **Smooth Navigation**
+- Implemented with **React Router** for SPA (Single Page Application).
+- Persistent navigation bar with dropdown on mobile.
+
+✅ **Notifications & UX Enhancements**
+- Toast messages for every action using **React Toastify**.
+- Dynamic page titles with **React Helmet Async**.
+- Scrolling text banners using **React Fast Marquee**.
+
+---
+
+## 🧩 Tech Stack & NPM Packages Used
+
+| Category | Packages / Tools |
+|-----------|------------------|
+| **Frontend** | React, React Router DOM |
+| **UI Frameworks** | Tailwind CSS, DaisyUI |
+| **Icons & Effects** | React Icons, React Fast Marquee |
+| **Authentication & Database** | Firebase (Email/Pass + Google Auth) |
+| **Context & State Management** | React Context API (AuthProvider) |
+| **Alerts & Feedback** | React Toastify |
+| **Head Management** | React Helmet Async |
+| **Environment Handling** | Vite + `.env` variables |
+| **Slider / Carousel** | React Slider or Swiper (if used in banner) |
+
+---
+
+## 🛠️ Environment Variables Setup
+
+Before running the project, create a `.env.local` file in your project root and add the following:
+
+```bash
+VITE_apiKey=api_key
+VITE_authDomain=_auth_domain_
+VITE_projectId=_project_id_
+VITE_storageBucket=_storage_bucket_
+VITE_messagingSenderId=_sender_id_
+VITE_appId=_app_id_
+
+
+🚀 How to Run Locally
+
+1.Clone this repository:
+
+git clone https://github.com/yourusername/toytopia.git
+cd toytopia
+
+
+2.Install dependencies:
+
+npm install
+
+
+3.Add your Firebase config to .env file.
+
+4.Run the app:
+
+npm run dev
+
+
+5.Visit your local app:
+
+http://localhost:5173
+
+
+📜 License
+
+This project is open-source and available under the MIT License.
+
+
+
+💬 Feedback
+
+If you liked this project, give it a ⭐ on GitHub and share your feedback!
+Happy Coding 🎈
