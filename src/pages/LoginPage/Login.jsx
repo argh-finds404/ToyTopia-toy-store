@@ -1,14 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { logIn } = useContext(AuthContext);
+  const { logIn, setUser } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -19,25 +18,17 @@ const Login = () => {
 
     logIn(email, password)
       .then((res) => {
-        const user = res.user;
-        // show success toast
+        setUser(res.user);
+
         toast.success("Login successful! Welcome back.", {
           position: "top-center",
           autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
         });
 
-        navigate(`${location.state ? location.state : "/"}`);
+        navigate(location.state?.from?.pathname || "/");
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        toast.error(errorMessage, {
-          position: "top-center",
-          autoClose: 3000,
-        });
+        toast.error(error.message, { position: "top-center", autoClose: 3000 });
       });
   };
 
@@ -46,117 +37,120 @@ const Login = () => {
       <Helmet>
         <title>Login</title>
       </Helmet>
+
       <div className={styles.loginCard}>
-        <div className={styles.loginHeader}>
-          <div className={styles.materialLogo}>
-            <div className={styles.logoLayers}>
-              <div className={`${styles.layer} ${styles.layer1}`}></div>
-              <div className={`${styles.layer} ${styles.layer2}`}></div>
-              <div className={`${styles.layer} ${styles.layer3}`}></div>
-            </div>
+        {/* Material Design Logo */}
+        <div className={styles.materialLogo}>
+          <div className={styles.logoLayers}>
+            <div className={`${styles.layer} ${styles.layer1}`}></div>
+            <div className={`${styles.layer} ${styles.layer2}`}></div>
+            <div className={`${styles.layer} ${styles.layer3}`}></div>
           </div>
+        </div>
+
+        <div className={styles.loginHeader}>
           <h2>Sign in</h2>
           <p>to continue to your account</p>
         </div>
 
-        <form onSubmit={handleLogin} className={styles.loginForm} noValidate>
+        <form onSubmit={handleLogin} className={styles.loginForm}>
+          {/* Email */}
           <div className={styles.formGroup}>
             <div className={styles.inputWrapper}>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                autoComplete="email"
-              />
+              <input type="email" name="email" id="email" required />
               <label htmlFor="email">Email</label>
               <div className={styles.inputLine}></div>
               <div className={styles.rippleContainer}></div>
             </div>
-            <span className={styles.errorMessage} id="emailError"></span>
           </div>
 
+          {/* Password */}
           <div className={styles.formGroup}>
-            <div className={`${styles.inputWrapper} ${styles.passwordWrapper}`}>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                required
-                autoComplete="current-password"
-              />
-              <label htmlFor="password">Password</label>
+            <div className={styles.inputWrapper}>
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={styles.passwordToggle}
+                >
+                  <div className={styles.toggleRipple}></div>
+                  <div
+                    className={`${styles.toggleIcon} ${
+                      showPassword ? styles.showPassword : ""
+                    }`}
+                  ></div>
+                </button>
+              </div>
               <div className={styles.inputLine}></div>
-              <button
-                type="button"
-                className={styles.passwordToggle}
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label="Toggle password visibility"
-              >
-                <div className={styles.toggleRipple}></div>
-                <span className={styles.toggleIcon}>
-                  {showPassword ? "🙈" : "👁️"}
-                </span>
-              </button>
               <div className={styles.rippleContainer}></div>
             </div>
-            <span className={styles.errorMessage} id="passwordError"></span>
           </div>
 
+          {/* Form Options */}
           <div className={styles.formOptions}>
             <div className={styles.checkboxWrapper}>
-              <input type="checkbox" id="remember" name="remember" />
-              <label htmlFor="remember" className={styles.checkboxLabel}>
+              <input type="checkbox" id="rememberMe" />
+              <label htmlFor="rememberMe" className={styles.checkboxLabel}>
                 <div className={styles.checkboxMaterial}>
                   <div className={styles.checkboxRipple}></div>
                   <svg className={styles.checkboxIcon} viewBox="0 0 24 24">
                     <path
                       className={styles.checkboxPath}
-                      d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                      d="M4.1,12.7 9,17.6 20.3,6.3"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="3"
                     />
                   </svg>
                 </div>
-                Keep me signed in
+                Remember me
               </label>
             </div>
-            <Link to="" className={styles.forgotPassword}>
+            <Link
+              to="/auth/forgot-password"
+              state={{ email: document.getElementById("email")?.value || "" }}
+              className={styles.forgotPassword}
+            >
               Forgot password?
             </Link>
           </div>
 
-          <button
-            type="submit"
-            className={`${styles.loginBtn} ${styles.materialBtn}`}
-          >
+          <button type="submit" className={styles.materialBtn}>
             <div className={styles.btnRipple}></div>
-            <span className={styles.btnText}>SIGN IN</span>
+            <span className={styles.btnText}>Sign In</span>
             <div className={styles.btnLoader}>
-              <svg className={styles.loaderCircle} viewBox="0 0 50 50">
+              <svg className={styles.loaderCircle} viewBox="0 0 24 24">
                 <circle
                   className={styles.loaderPath}
-                  cx="25"
-                  cy="25"
-                  r="12"
+                  cx="12"
+                  cy="12"
+                  r="10"
                   fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
+                  stroke="white"
+                  strokeWidth="2"
                 />
               </svg>
             </div>
           </button>
         </form>
 
+        {/* Social Login Divider */}
         <div className={styles.divider}>
-          <span>or</span>
+          <span>or continue with</span>
         </div>
 
+        {/* Social Login Buttons */}
         <div className={styles.socialLogin}>
-          <button
-            type="button"
-            className={`${styles.socialBtn} ${styles.googleMaterial}`}
-          >
+          <button type="button" className={styles.socialBtn}>
             <div className={styles.socialRipple}></div>
-            <div className={`${styles.socialIcon} ${styles.googleIcon}`}>
+            <div className={styles.socialIcon}>
               <svg viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
@@ -176,23 +170,7 @@ const Login = () => {
                 />
               </svg>
             </div>
-            <span>Continue with Google</span>
-          </button>
-
-          <button
-            type="button"
-            className={`${styles.socialBtn} ${styles.facebookMaterial}`}
-          >
-            <div className={styles.socialRipple}></div>
-            <div className={`${styles.socialIcon} ${styles.facebookIcon}`}>
-              <svg viewBox="0 0 24 24">
-                <path
-                  fill="#1877F2"
-                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-                />
-              </svg>
-            </div>
-            <span>Continue with Facebook</span>
+            Continue with Google
           </button>
         </div>
 
@@ -203,18 +181,6 @@ const Login = () => {
               Create account
             </Link>
           </p>
-        </div>
-
-        <div className={styles.successMessage} id="successMessage">
-          <div className={styles.successElevation}>
-            <div className={styles.successIcon}>
-              <svg viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-              </svg>
-            </div>
-            <h3>Welcome back!</h3>
-            <p>Signing you in...</p>
-          </div>
         </div>
       </div>
     </div>

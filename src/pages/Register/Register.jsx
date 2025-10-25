@@ -1,35 +1,31 @@
 import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet-async";
 
 const Register = () => {
-  const { createUser, setUser } = useContext(AuthContext);
+  const { createUser, updateUser } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [nameError, setNameError] = useState("");
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
 
-    if (!/(?=.*[A-Z])/.test(value)) {
-      setPasswordMessage(
-        "Password must include at least one uppercase letter."
-      );
-    } else if (!/(?=.*[a-z])/.test(value)) {
-      setPasswordMessage(
-        "Password must include at least one lowercase letter."
-      );
-    } else if (value.length < 6) {
-      setPasswordMessage("Password must be at least 6 characters long.");
-    } else {
-      setPasswordMessage("Good to go");
-    }
+    if (!/(?=.*[A-Z])/.test(value))
+      setPasswordMessage("Include uppercase letter.");
+    else if (!/(?=.*[a-z])/.test(value))
+      setPasswordMessage("Include lowercase letter.");
+    else if (value.length < 6) setPasswordMessage("At least 6 characters.");
+    else setPasswordMessage("Good to go");
   };
 
   const handleRegister = (e) => {
@@ -38,172 +34,169 @@ const Register = () => {
     const email = e.target.email.value;
     const photo = e.target.photo.value;
 
-    // Name validation
     if (name.length < 5) {
-      setNameError("Name must be at least 5 characters long.");
+      setNameError("Name must be at least 5 characters.");
       return;
-    } else {
-      setNameError(""); // clear previous error
-    }
+    } else setNameError("");
 
-    // Password validation
     if (!passwordRegex.test(password)) {
-      setPasswordMessage(
-        "Password must have at least one uppercase, one lowercase, and be at least 6 characters long."
-      );
+      setPasswordMessage("Password invalid.");
       return;
     }
 
     createUser(email, password)
-      .then((res) => {
-        const user = res.user;
-        setUser(user);
-        setPasswordMessage("");
-
-        toast.success("Account created successfully!", {
-          position: "top-center",
-          autoClose: 2000,
-        });
+      .then(() => updateUser({ displayName: name, photoURL: photo }))
+      .then(() => {
+        toast.success("Account created successfully!");
+        navigate("/auth/login");
       })
-      .catch((error) => {
-        setPasswordMessage(error.message);
-        toast.error(error.message, {
-          position: "top-center",
-          autoClose: 3000,
-        });
-      });
+      .catch((err) => toast.error(err.message));
   };
 
   return (
     <div className={styles.registerContainer}>
-      {/* Dynamic page title */}
       <Helmet>
-        <title>Registration</title>
+        <title>Register</title>
       </Helmet>
-      
       <div className={styles.registerCard}>
-        <div className={styles.registerHeader}>
-          <div className={styles.materialLogo}>
-            <div className={styles.logoLayers}>
-              <div className={`${styles.layer} ${styles.layer1}`}></div>
-              <div className={`${styles.layer} ${styles.layer2}`}></div>
-              <div className={`${styles.layer} ${styles.layer3}`}></div>
-            </div>
+        {/* Material Design Logo */}
+        <div className={styles.materialLogo}>
+          <div className={styles.logoLayers}>
+            <div className={`${styles.layer} ${styles.layer1}`}></div>
+            <div className={`${styles.layer} ${styles.layer2}`}></div>
+            <div className={`${styles.layer} ${styles.layer3}`}></div>
           </div>
-          <h2>Create Account</h2>
-          <p>Join us and enjoy your journey</p>
         </div>
 
-        <form onSubmit={handleRegister} className={styles.registerForm}>
-          {/* Name */}
+        <div className={styles.registerHeader}>
+          <h2>Create Account</h2>
+          <p>Join our community and explore amazing toys!</p>
+        </div>
+
+        <form onSubmit={handleRegister} className={styles.loginForm}>
+          {/* Full Name */}
           <div className={styles.formGroup}>
             <div className={styles.inputWrapper}>
-              <input name="name" type="text" id="name" required />
+              <input type="text" name="name" id="name" required />
               <label htmlFor="name">Full Name</label>
-              <span className={styles.inputLine}></span>
+              <div className={styles.inputLine}></div>
             </div>
-            {nameError && (
-              <p
-                className={styles.passwordWarning}
-                style={{ color: "#e53935" }}
-              >
-                {nameError}
-              </p>
-            )}
+            {nameError && <p className="error">{nameError}</p>}
           </div>
 
           {/* Email */}
           <div className={styles.formGroup}>
             <div className={styles.inputWrapper}>
-              <input name="email" type="email" id="email" required />
+              <input type="email" name="email" id="email" required />
               <label htmlFor="email">Email</label>
-              <span className={styles.inputLine}></span>
+              <div className={styles.inputLine}></div>
             </div>
           </div>
 
           {/* Photo URL */}
           <div className={styles.formGroup}>
             <div className={styles.inputWrapper}>
-              <input name="photo" type="text" id="photoURL" required />
-              <label htmlFor="photoURL">Photo URL</label>
-              <span className={styles.inputLine}></span>
+              <input type="text" name="photo" id="photo" required />
+              <label htmlFor="photo">Photo URL</label>
+              <div className={styles.inputLine}></div>
             </div>
           </div>
 
-          {/* Password */}
+          {/* Password - Fixed with proper wrapper */}
           <div className={styles.formGroup}>
-            <div className={styles.inputWrapper}>
+            <div
+              className={styles.inputWrapper}
+              style={{ position: "relative" }}
+            >
               <input
+                type={showPassword ? "text" : "password"}
                 name="password"
-                type="password"
                 id="password"
                 value={password}
                 onChange={handlePasswordChange}
                 required
+                style={{ paddingRight: "50px" }} // Add padding for the eye icon
               />
               <label htmlFor="password">Password</label>
-              <span className={styles.inputLine}></span>
+              <div className={styles.inputLine}></div>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.passwordToggle}
+                style={{
+                  position: "absolute",
+                  right: "0",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "8px",
+                  color: "#757575",
+                  fontSize: "16px",
+                }}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
             </div>
             {passwordMessage && (
               <p
-                className={styles.passwordWarning}
-                style={{
-                  color:
-                    passwordMessage === "Good to go" ? "#43a047" : "#e53935",
-                }}
+                className={
+                  passwordMessage === "Good to go"
+                    ? styles.passwordWarning + " success"
+                    : styles.passwordWarning + " error"
+                }
               >
                 {passwordMessage}
               </p>
             )}
           </div>
 
-          {/* Register Button */}
           <button type="submit" className={styles.materialBtn}>
-            <span className={styles.btnText}>Register</span>
+            Register
           </button>
-
-          {/* Divider */}
-          <div className={styles.divider}>
-            <span>or</span>
-          </div>
-
-          {/* Google Login */}
-          <div className={styles.socialLogin}>
-            <button className={styles.socialBtn}>
-              <div className={styles.socialIcon}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                  <path
-                    fill="#EA4335"
-                    d="M24 9.5c3.94 0 7.02 1.63 9.17 3l6.76-6.76C35.5 2.24 30.13 0 24 0 14.62 0 6.43 5.37 2.46 13.18l7.9 6.15C12.11 13.74 17.58 9.5 24 9.5z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M46.1 24.5c0-1.57-.14-3.08-.4-4.55H24v9h12.7c-.55 2.84-2.17 5.25-4.62 6.86l7.19 5.56c4.2-3.88 6.83-9.61 6.83-16.87z"
-                  />
-                  <path
-                    fill="#4A90E2"
-                    d="M9.36 28.67a14.44 14.44 0 010-9.34l-7.9-6.15C.51 16.13 0 19 0 22s.51 5.87 1.46 8.82l7.9-6.15z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M24 48c6.13 0 11.49-2.02 15.32-5.53l-7.19-5.56c-2 1.33-4.56 2.09-8.13 2.09-6.42 0-11.89-4.24-13.64-10.09l-7.9 6.15C6.43 42.63 14.62 48 24 48z"
-                  />
-                </svg>
-              </div>
-              Continue with Google
-            </button>
-          </div>
-
-          {/* Login Link */}
-          <div className={styles.signupLink}>
-            <p>
-              Already have an account?{" "}
-              <Link to="/auth/login" className={styles.createAccount}>
-                Login
-              </Link>
-            </p>
-          </div>
         </form>
+
+        {/* Social Login Divider */}
+        <div className={styles.divider}>
+          <span>or sign up with</span>
+        </div>
+
+        {/* Social Login Buttons */}
+        <div className={styles.socialLogin}>
+          <button type="button" className={styles.socialBtn}>
+            <div className={styles.socialIcon}>
+              <svg viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                />
+              </svg>
+            </div>
+            Continue with Google
+          </button>
+        </div>
+
+        <div className={styles.signupLink}>
+          <p>
+            Already have an account?{" "}
+            <Link to="/auth/login" className={styles.createAccount}>
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

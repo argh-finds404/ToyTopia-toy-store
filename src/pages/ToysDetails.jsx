@@ -8,7 +8,7 @@ import { FaRegCircleCheck, FaChildren } from "react-icons/fa6";
 import { FaShippingFast } from "react-icons/fa";
 import { Helmet } from "react-helmet-async"; 
 
-const ToysDetailsMain = () => {
+const ToysDetails = () => {
   const { id } = useParams();
   const data = useLoaderData();
   const toy = data.find((item) => item.toyId == id);
@@ -201,4 +201,4 @@ const ToysDetailsMain = () => {
   );
 };
 
-export default ToysDetailsMain;
+export default ToysDetails;
