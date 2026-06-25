@@ -13,9 +13,7 @@ const HomeLayout = () => {
   const location = useLocation();
   const [pageTitle, setPageTitle] = useState("ToyTopia-Home");
 
-  // Static title update logic
   useEffect(() => {
-    // You can map paths to titles if needed later
     setPageTitle("ToyTopia-Home");
   }, [location]);
 

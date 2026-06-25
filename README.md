@@ -73,13 +73,13 @@ The main objectives of this project are to:
 | **Alerts & Feedback** | React Toastify |
 | **Head Management** | React Helmet Async |
 | **Environment Handling** | Vite + `.env` variables |
-| **Slider / Carousel** | React Slider or Swiper (if used in banner) |
+| **Slider / Carousel** | React Slider or Swiper (used in banner) |
 
 ---
 
 ## 🛠️ Environment Variables Setup
 
-Before running the project, create a `.env.local` file in your project root and add the following:
+To run the project, create a `.env.local` file in your project root and add the following:
 
 ```bash
 VITE_apiKey=api_key
