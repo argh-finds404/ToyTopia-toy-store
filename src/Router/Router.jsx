@@ -12,6 +12,12 @@ import ForgotPassword from "../pages/ForgetPassword";
 import Loading from "../pages/Loading";
 import ErrorPage from "../pages/error/ErrorPage";
 import PrivateRoute from "../Provider/PrivateRoute";
+import AboutUs from "../pages/AboutUs";
+import Blog from "../pages/Blog";
+import Contact from "../pages/Contact";
+import LiveTrack from "../pages/LiveTrack";
+import Games from "../pages/Games";
+import Competitions from "../pages/Competitions";
 
 const fetchToys = async () => {
   const res = await fetch("/toys.json");
@@ -34,6 +40,22 @@ const router = createBrowserRouter([
         element: <CategoriesToys />,
         loader: fetchToys,
         hydrateFallbackElement: <Loading />,
+      },
+      {
+        path: "aboutus",
+        element: <AboutUs />,
+      },
+      {
+        path: "blog",
+        element: <Blog />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "livetrack",
+        element: <LiveTrack />,
       },
     ],
   },
@@ -73,9 +95,18 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/games",
+    element: <Games />,
+  },
+  {
+    path: "/competitions",
+    element: <Competitions />,
+  },
+  {
     path: "*",
     element: <ErrorPage />,
   },
 ]);
 
 export default router;
+

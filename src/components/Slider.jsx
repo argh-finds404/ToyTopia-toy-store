@@ -7,32 +7,40 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 const Slider = () => {
   return (
-    <div className="w-full max-w-11/12 mx-auto mt-10 relative px-6">
+    <div className="w-11/12 max-w-7xl mx-auto mt-6 relative select-none">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={35} // increased spacing between slides
+        spaceBetween={20}
         slidesPerView={1}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+          },
+        }}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={true}
         speed={800}
-        breakpoints={{
-          640: { slidesPerView: 1, spaceBetween: 30 },
-          768: { slidesPerView: 1, spaceBetween: 35 },
-          1024: { slidesPerView: 3, spaceBetween: 35 },
-        }}
+        className="w-full py-4 pb-12"
       >
-        {[1, 2, 3, 4, 5, 6, 7,8,9].map((num) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
           <SwiperSlide key={num}>
-            <div className="py-10 px-4">
-              <div className="w-full h-[29rem] sm:h-96 md:h-[29rem] lg:h-[35rem] overflow-hidden rounded-xl">
-                <img
-                  src={`/img${num}.jpg`}
-                  alt={`Slide ${num}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="w-full h-[420px] sm:h-[460px] md:h-[480px] lg:h-[500px] overflow-hidden rounded-3xl shadow-md border border-slate-100/80 bg-white group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img
+                src={`/img${num}.jpg`}
+                alt={`Banner Slide ${num}`}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
             </div>
           </SwiperSlide>
         ))}
@@ -42,3 +50,6 @@ const Slider = () => {
 };
 
 export default Slider;
+
+
+

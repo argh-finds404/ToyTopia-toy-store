@@ -1,110 +1,121 @@
-import React from "react";
-import logo from "../assets/logoblack.png";
+import React, { useState } from "react";
+import logo from "../assets/newLogo.png";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { FaTwitter, FaYoutube, FaFacebookF, FaPaperPlane } from "react-icons/fa";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    toast.success("Welcome to the ToyTopia newsletter family!", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+    setEmail("");
+  };
+
   return (
-    <div className="bg-[#30343f] text-white py-12">
-      <footer className="max-w-11/12 mx-auto flex flex-col lg:flex-row lg:justify-between lg:items-start gap-14 text-center sm:text-left">
-        {/* Logo + Tagline */}
-        <aside className="flex flex-col items-center sm:items-start space-y-2 w-full sm:w-auto">
-          <img className="h-[80px] w-[90px]" src={logo} alt="ToyTopia Logo" />
-          <p className="text-sm text-[#fafaff] leading-snug">
-            <span className="font-semibold text-white">ToyTopia Shop Ltd.</span>
-            <br />
-            Where Every Day is Play Day.
-          </p>
-        </aside>
-
-        {/* Social Links */}
-        <aside className="w-full sm:w-auto flex flex-col items-center sm:items-start space-y-3">
-          <h6 className="footer-title text-sm text-white font-semibold">
-            Social
-          </h6>
-          <div className="flex justify-center sm:justify-start gap-5">
-            <a aria-label="Twitter">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
+    <div className="bg-slate-900 bg-gradient-to-br from-slate-900 to-slate-800 text-slate-300 border-t border-slate-700/50 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+      <div className="py-16 px-6 sm:px-12 max-w-7xl mx-auto">
+        <footer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 text-center md:text-left">
+          {/* Logo & Tagline */}
+          <div className="lg:col-span-2 space-y-4">
+            <Link to="/" className="inline-flex items-center gap-3">
+              <img className="h-10 w-auto object-contain" src={logo} alt="ToyTopia Logo" />
+              <span className="font-extrabold text-2xl tracking-tight text-white">
+                Toy<span className="text-toy-primary">Topia</span>
+              </span>
+            </Link>
+            <p className="text-xs text-slate-400 max-w-xs leading-relaxed">
+              ToyTopia is the ultimate creative play store for children and parents. Explore, dream, and play with our premium quality curated toys.
+            </p>
+            <div className="flex justify-center md:justify-start gap-4 pt-2">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-toy-primary hover:text-white transition-all duration-300 hover:scale-110 shadow-sm"
               >
-                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-              </svg>
-            </a>
-            <a aria-label="YouTube">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
+                <FaTwitter size={14} />
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-[#ff0000] hover:text-white transition-all duration-300 hover:scale-110 shadow-sm"
               >
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-              </svg>
-            </a>
-            <a aria-label="Facebook">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
+                <FaYoutube size={14} />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center hover:bg-[#1877f2] hover:text-white transition-all duration-300 hover:scale-110 shadow-sm"
               >
-                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-              </svg>
-            </a>
+                <FaFacebookF size={14} />
+              </a>
+            </div>
           </div>
-        </aside>
 
-        {/* Footer Navigation */}
-        <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-14 sm:gap-28 w-full sm:w-auto text-sm">
-          <nav>
-            <h6 className="footer-title mb-3 text-white font-semibold">
-              Services
-            </h6>
-            <a className="link link-hover block mb-1">Branding</a>
-            <a className="link link-hover block mb-1">Design</a>
-            <a className="link link-hover block mb-1">Marketing</a>
-            <a className="link link-hover block">Advertisement</a>
-          </nav>
-          <nav>
-            <h6 className="footer-title mb-3 text-white font-semibold">
-              Explore
-            </h6>
-            <a className="link link-hover block mb-1">Features</a>
-            <a className="link link-hover block mb-1">Enterprise</a>
-            <a className="link link-hover block mb-1">Security</a>
-            <a className="link link-hover block">Pricing</a>
-          </nav>
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Explore</h4>
+            <ul className="space-y-2 text-xs">
+              <li><Link to="/" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">Home</Link></li>
+              <li><Link to="/aboutus" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">About Us</Link></li>
+              <li><Link to="/blog" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">Blog</Link></li>
+              <li><Link to="/contact" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">Contact</Link></li>
+            </ul>
+          </div>
 
-          <nav>
-            <h6 className="footer-title mb-3 text-white font-semibold">
-              Company
-            </h6>
-            <a className="link link-hover block mb-1">About us</a>
-            <a className="link link-hover block mb-1">Contact</a>
-            <a className="link link-hover block mb-1">Jobs</a>
-            <a className="link link-hover block">Press kit</a>
-          </nav>
+          {/* Customer Care */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider font-extrabold">Features</h4>
+            <ul className="space-y-2 text-xs">
+              <li><Link to="/livetrack" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">Track Order</Link></li>
+              <li><Link to="/wishlist" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">Wishlist</Link></li>
+              <li><Link to="/profile" className="hover:text-toy-primary transition-colors text-slate-400 font-semibold">My Profile</Link></li>
+              <li><span className="text-slate-500 cursor-not-allowed">Cookie Policy</span></li>
+            </ul>
+          </div>
 
-          <nav>
-            <h6 className="footer-title mb-3 text-white font-semibold">
-              Legal
-            </h6>
-            <a className="link link-hover block mb-1">Terms of use</a>
-            <a className="link link-hover block mb-1">Privacy policy</a>
-            <a className="link link-hover block">Cookie policy</a>
-          </nav>
+          {/* Newsletter Form */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Newsletter</h4>
+            <p className="text-[11px] text-slate-400 leading-normal">
+              Subscribe to get child development guides, coupons, and toy releases!
+            </p>
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 mt-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-slate-900 text-white rounded-xl px-3.5 py-2 text-xs outline-none border border-slate-800 focus:border-toy-primary transition-all w-full placeholder-slate-500"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-toy-primary hover:bg-toy-primary/90 text-white font-semibold text-xs px-4 py-2 rounded-xl flex items-center justify-center gap-1 active:scale-95 transition-all shadow-sm cursor-pointer whitespace-nowrap"
+              >
+                <FaPaperPlane size={10} /> Join
+              </button>
+            </form>
+          </div>
+        </footer>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-6 border-t border-slate-850 text-center text-[11px] text-slate-500 font-semibold">
+          <p>© {new Date().getFullYear()} ToyTopia Shop Ltd. Crafted with 💖 for smiling children everywhere.</p>
         </div>
-      </footer>
-
-      {/* Divider + Copy */}
-      <div className="max-w-11/12 mx-auto mt-10 border-t border-gray-600 pt-6 text-center text-sm text-gray-300">
-        © {new Date().getFullYear()} ToyTopia Shop Ltd. All rights reserved.
       </div>
     </div>
   );
 };
 
 export default Footer;
+
+

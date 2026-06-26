@@ -1,4 +1,4 @@
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
   @import "tailwindcss";
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
@@ -6,10 +6,74 @@
     themes: light --default;
   }
 
-    * {
-      font-family: "Nunito", sans-serif;
-    }
+  @theme {
+    --color-toy-primary: #8b5cf6;
+    --color-toy-primary-light: #ede9fe;
+    --color-toy-secondary: #f43f5e;
+    --color-toy-accent: #f59e0b;
+    --color-toy-mint: #10b981;
+    --color-toy-teal: #14b8a6;
+    --color-toy-cream: #f8fafc;
+    --color-toy-yellow: #fbbf24;
+  }
 
- a.active{
-  @apply bg-[#d00000]
- }   
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: "Fredoka", sans-serif;
+  }
+
+  * {
+    font-family: "Quicksand", sans-serif;
+  }
+
+  /* Custom navigation link active state */
+  .toy-nav-link {
+    @apply flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 font-semibold text-gray-600 hover:text-toy-primary hover:bg-toy-primary-light/50;
+  }
+
+  .toy-nav-link.active {
+    @apply text-toy-primary bg-toy-primary-light shadow-sm scale-105;
+  }
+
+  /* Custom scrollbar for clean premium look */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c7c7ff;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a5a5ff;
+  }
+
+  /* Keyframes for premium fluid elements */
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-25px) scale(1.08);
+    }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% {
+      transform: translateY(0px) scale(1.08);
+    }
+    50% {
+      transform: translateY(25px) scale(1);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 12s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 15s ease-in-out infinite;
+  }

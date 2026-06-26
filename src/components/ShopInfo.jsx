@@ -12,50 +12,54 @@ const ShopInfo = () => {
     {
       icon: faTruck,
       title: "Express Delivery",
-      subtitle: "Inside Dhaka",
+      subtitle: "Inside Dhaka in 24h",
+      color: "text-toy-primary"
     },
     {
       icon: faBox,
       title: "Free Return",
-      subtitle: "365 A Day",
+      subtitle: "For 365 Days",
+      color: "text-toy-secondary"
     },
     {
       icon: faHeadset,
       title: "24/7 Support",
-      subtitle: "Online 24 hours",
+      subtitle: "Always online",
+      color: "text-toy-mint"
     },
     {
       icon: faCreditCard,
-      title: "Payment Method",
-      subtitle: "Secure Online Payment",
+      title: "Secure Pay",
+      subtitle: "100% Encrypted",
+      color: "text-[#a55eea]"
     },
   ];
 
   return (
-    <div className="max-w-11/12 mx-auto px-4">
-      <div className="bg-[#faedcd] rounded-3xl py-2 sm:py-5 lg:py-4 px-5 sm:px-6 lg:px-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-center">
+    <div className="w-11/12 max-w-7xl mx-auto px-4 mt-6">
+      <div className="bg-white border border-slate-100 shadow-sm rounded-3xl py-4 px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-center gap-4 sm:gap-0">
           {infos.map((info, i) => (
             <div
               key={i}
-              className={`flex flex-col items-center justify-center p-5 relative`}
+              className={`flex flex-col items-center justify-center p-4 relative`}
             >
-              <div className="text-3xl text-[#023047] mb-2">
+              <div className={`text-3xl ${info.color} mb-2`}>
                 <FontAwesomeIcon icon={info.icon} />
               </div>
-              <h3 className="font-semibold text-base sm:text-lg">
+              <h3 className="font-extrabold text-sm sm:text-base text-gray-800">
                 {info.title}
               </h3>
-              <p className="text-gray-600 text-sm">{info.subtitle}</p>
+              <p className="text-gray-400 text-xs mt-0.5">{info.subtitle}</p>
 
-              {/* ✅ Conditional Borders */}
+              {/* ✅ Conditional Dividers */}
               {/* Desktop: vertical divider (right side) */}
               {i !== infos.length - 1 && (
-                <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-25 bg-gray-500"></div>
+                <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[1px] h-12 bg-slate-100"></div>
               )}
               {/* Mobile: horizontal divider (bottom) */}
               {i !== infos.length - 1 && (
-                <div className="block md:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-px bg-gray-400"></div>
+                <div className="block md:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-[1px] bg-slate-100"></div>
               )}
             </div>
           ))}
@@ -66,3 +70,4 @@ const ShopInfo = () => {
 };
 
 export default ShopInfo;
+

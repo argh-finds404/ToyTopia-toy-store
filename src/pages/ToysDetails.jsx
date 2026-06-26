@@ -5,7 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaRegCircleCheck, FaChildren } from "react-icons/fa6";
-import { FaShippingFast } from "react-icons/fa";
+import { FaShippingFast, FaSearch } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 
 const ToysDetails = () => {
@@ -36,8 +36,22 @@ const ToysDetails = () => {
 
   if (!toy) {
     return (
-      <div className="text-center py-20">
-        <p className="text-gray-500 text-lg">Product not found.</p>
+      <div className="bg-[#f8f9ff] min-h-screen flex flex-col justify-between">
+        <Header />
+        <main className="max-w-xl mx-auto my-20 px-6 text-center space-y-5 bg-white border border-slate-100 p-10 rounded-3xl shadow-sm flex flex-col items-center justify-center">
+          <div className="text-6xl animate-bounce select-none text-toy-primary flex justify-center"><FaSearch /></div>
+          <h2 className="text-2xl font-extrabold text-slate-800">Toy Not Found!</h2>
+          <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+            Oops! The toy you are looking for has hidden in the toy box. It might have been sold out or moved.
+          </p>
+          <button
+            onClick={() => navigate("/categories")}
+            className="bg-toy-primary hover:bg-toy-primary/95 text-white font-extrabold px-6 py-3 rounded-2xl shadow-md active:scale-95 transition-all text-xs cursor-pointer"
+          >
+            Back to Catalog
+          </button>
+        </main>
+        <Footer />
       </div>
     );
   }
