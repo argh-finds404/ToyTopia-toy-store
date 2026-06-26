@@ -30,26 +30,36 @@ const Wishlist = () => {
       return;
     }
     setLoading(true);
-    const q = query(
-      collection(db, "wishlist"),
-      where("userEmail", "==", user.email)
-    );
 
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setWishlist(items);
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Wishlist onSnapshot error:", error);
-        setLoading(false);
-        toast.error("Failed to load wishlist items.");
-      }
-    );
+    let unsubscribe;
+    try {
+      const q = query(
+        collection(db, "wishlist"),
+        where("userEmail", "==", user?.email || "")
+      );
 
-    return () => unsubscribe();
+      unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          setWishlist(items);
+          setLoading(false);
+        },
+        (error) => {
+          console.error("Wishlist onSnapshot error:", error);
+          setLoading(false);
+          toast.error("Failed to load wishlist items.");
+        }
+      );
+
+    } catch (err) {
+      console.error("Query setup error:", err);
+      setLoading(false);
+    }
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, [user]);
 
   const removeFromWishlist = async (id) => {

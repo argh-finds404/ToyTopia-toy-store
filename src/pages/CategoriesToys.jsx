@@ -13,7 +13,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { FaHeart, FaRegHeart, FaExclamationCircle } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaExclamationCircle, FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, FaAngleDoubleRight, FaStar } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import EmptyState from "../components/EmptyState";
@@ -197,8 +197,8 @@ const CategoriesToys = () => {
 
                     <div className="flex justify-between items-center mb-4">
                       <p className="text-toy-teal font-extrabold text-xl">${toy.price}</p>
-                      <span className="text-sm text-toy-yellow font-bold flex items-center gap-1">
-                        ⭐ {toy.rating}
+                      <span className="text-sm text-toy-yellow font-bold flex items-center gap-1.5">
+                        <FaStar /> {toy.rating}
                       </span>
                     </div>
                   </div>
@@ -220,17 +220,19 @@ const CategoriesToys = () => {
               <button
                 disabled={currentPage === 1}
                 onClick={() => handlePageChange(currentPage - 1)}
-                className="px-4 py-2 bg-white rounded-xl border border-slate-200 text-gray-700 hover:bg-toy-primary-light hover:text-toy-primary disabled:opacity-40 transition-all font-semibold active:scale-95 cursor-pointer disabled:cursor-not-allowed text-xs animate-fade-in"
+                className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-gray-700 hover:bg-toy-primary-light hover:text-toy-primary disabled:opacity-40 transition-all font-semibold active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center animate-fade-in"
+                title="Previous Page"
               >
-                Prev
+                <FaAngleLeft size={16} />
               </button>
 
               {startPage > 1 && (
                 <button
                   onClick={handlePrevChunk}
-                  className="px-4 py-2 bg-white rounded-xl border border-slate-200 text-gray-500 hover:bg-toy-primary-light hover:text-toy-primary transition-all font-semibold active:scale-95 cursor-pointer text-xs"
+                  className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-gray-500 hover:bg-toy-primary-light hover:text-toy-primary transition-all font-semibold active:scale-95 cursor-pointer flex items-center justify-center"
+                  title="Previous 5 Pages"
                 >
-                  Prev 5
+                  <FaAngleDoubleLeft size={16} />
                 </button>
               )}
 
@@ -239,7 +241,7 @@ const CategoriesToys = () => {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`w-10 h-10 rounded-xl font-bold text-sm transition-all active:scale-95 border cursor-pointer ${
+                    className={`w-10 h-10 rounded-xl font-bold text-sm transition-all active:scale-95 border cursor-pointer flex items-center justify-center ${
                       currentPage === pageNum
                         ? "bg-toy-primary text-white border-toy-primary shadow-md shadow-toy-primary/20"
                         : "bg-white text-gray-600 border-slate-200 hover:bg-toy-primary-light hover:text-toy-primary"
@@ -253,18 +255,20 @@ const CategoriesToys = () => {
               {endPage < totalPages && (
                 <button
                   onClick={handleNextChunk}
-                  className="px-4 py-2 bg-white rounded-xl border border-slate-200 text-gray-500 hover:bg-toy-primary-light hover:text-toy-primary transition-all font-semibold active:scale-95 cursor-pointer text-xs"
+                  className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-gray-500 hover:bg-toy-primary-light hover:text-toy-primary transition-all font-semibold active:scale-95 cursor-pointer flex items-center justify-center"
+                  title="Next 5 Pages"
                 >
-                  Next 5
+                  <FaAngleDoubleRight size={16} />
                 </button>
               )}
 
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => handlePageChange(currentPage + 1)}
-                className="px-4 py-2 bg-white rounded-xl border border-slate-200 text-gray-700 hover:bg-toy-primary-light hover:text-toy-primary disabled:opacity-40 transition-all font-semibold active:scale-95 cursor-pointer disabled:cursor-not-allowed text-sm animate-fade-in"
+                className="px-4 py-2.5 bg-white rounded-xl border border-slate-200 text-gray-700 hover:bg-toy-primary-light hover:text-toy-primary disabled:opacity-40 transition-all font-semibold active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center animate-fade-in"
+                title="Next Page"
               >
-                Next
+                <FaAngleRight size={16} />
               </button>
             </div>
           )}

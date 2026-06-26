@@ -10,6 +10,7 @@ import {
   MdOutlineTrackChanges,
   MdOutlineLogin,
   MdOutlineFavorite,
+  MdToys,
 } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -35,14 +36,23 @@ const Header = () => {
       setWishlistCount(0);
       return;
     }
-    const q = query(
-      collection(db, "wishlist"),
-      where("userEmail", "==", user.email)
-    );
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      setWishlistCount(snapshot.size);
-    });
-    return () => unsubscribe();
+    
+    let unsubscribe;
+    try {
+      const q = query(
+        collection(db, "wishlist"),
+        where("userEmail", "==", user?.email || "")
+      );
+      unsubscribe = onSnapshot(q, (snapshot) => {
+        setWishlistCount(snapshot.size);
+      });
+    } catch (err) {
+      console.error("Header Wishlist Error:", err);
+    }
+    
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, [user]);
 
   const mainNavLinks = (
@@ -53,10 +63,22 @@ const Header = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/wishlist" className="toy-nav-link relative">
-          <MdOutlineFavorite /> Wishlist
+        <NavLink to="/categories" className="toy-nav-link">
+          <MdToys /> All Toys
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/aboutus" className="toy-nav-link">
+          <IoPeople /> About Us
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/wishlist" className="toy-nav-link flex items-center justify-between">
+          <span className="flex items-center gap-1">
+            <MdOutlineFavorite /> Wishlist
+          </span>
           {wishlistCount > 0 && (
-            <span className="bg-toy-accent text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] absolute -top-1.5 -right-2 animate-bounce">
+            <span className="bg-toy-accent text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] ml-2">
               {wishlistCount}
             </span>
           )}
@@ -93,10 +115,12 @@ const Header = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/wishlist" className="toy-nav-link relative">
-          <MdOutlineFavorite /> Wishlist
+        <NavLink to="/wishlist" className="toy-nav-link flex items-center justify-between">
+          <span className="flex items-center gap-2">
+            <MdOutlineFavorite /> Wishlist
+          </span>
           {wishlistCount > 0 && (
-            <span className="bg-toy-accent text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] absolute -top-1.5 -right-2 animate-bounce">
+            <span className="bg-toy-accent text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] ml-2">
               {wishlistCount}
             </span>
           )}
@@ -131,8 +155,14 @@ const Header = () => {
         </button>
 
         {/* Universal Side Drawer */}
-        <div className={`fixed inset-0 bg-slate-900/40 z-[100] transition-opacity duration-300 ${isDrawerOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-          <div className={`fixed inset-y-0 left-0 w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div 
+          onClick={() => setIsDrawerOpen(false)}
+          className={`fixed inset-0 bg-slate-900/40 z-[100] transition-opacity duration-300 ${isDrawerOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className={`fixed inset-y-0 left-0 w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
+          >
             <div className="flex justify-between items-center p-4 border-b border-slate-100">
               <span className="font-extrabold text-2xl tracking-tight text-toy-primary font-heading drop-shadow-sm">
                 Toy<span className="text-toy-secondary">Topia</span>

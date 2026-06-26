@@ -5,8 +5,9 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaRegCircleCheck, FaChildren } from "react-icons/fa6";
-import { FaShippingFast, FaSearch } from "react-icons/fa";
+import { FaShippingFast, FaSearch, FaStar } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
+import ScrollToTop from "../components/ScrollToTop";
 
 const ToysDetails = () => {
   const { id } = useParams();
@@ -79,9 +80,10 @@ const ToysDetails = () => {
   };
 
   return (
-    <>
+    <div className="bg-[#f8f9ff] min-h-screen flex flex-col justify-between">
+      <ScrollToTop />
       <Helmet>
-        <title>{`${toy.subCategory} | ${toy.toyName} - ToyStore`}</title>
+        <title>{`${toy.subCategory} | ${toy.toyName} - ToyTopia`}</title>
         <meta
           name="description"
           content={toy.description.slice(0, 120) + "..."}
@@ -89,7 +91,7 @@ const ToysDetails = () => {
       </Helmet>
 
       <Header />
-      <main className="max-w-6xl mx-auto my-16 px-4">
+      <main className="max-w-6xl mx-auto my-16 px-4 flex-grow w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           {/* Left: Image */}
           <div className="relative bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
@@ -110,20 +112,6 @@ const ToysDetails = () => {
                 {toy.toyName}
               </h1>
               <p className="text-gray-500 text-sm mt-1">{toy.subCategory}</p>
-
-              {/* Price & Rating */}
-              <div className="flex items-center mt-4 space-x-4">
-                <div className="bg-green-50 text-green-700 font-bold px-4 py-2 rounded-xl shadow-inner">
-                  ${toy.price}
-                </div>
-                <div className="flex items-center bg-yellow-50 text-yellow-700 px-3 py-2 rounded-xl shadow-inner font-semibold">
-                  ⭐ {toy.rating}
-                </div>
-              </div>
-
-              {/* Seller Info */}
-              <div className="mt-5 space-y-1 text-gray-700">
-                <p>
                   <span className="font-semibold">Seller:</span>{" "}
                   {toy.sellerName} ({toy.sellerEmail})
                 </p>
@@ -138,18 +126,18 @@ const ToysDetails = () => {
               {/* Quantity Controls + Add to Cart */}
               <div className="mt-6 flex flex-col space-y-4">
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center border rounded-lg overflow-hidden">
+                  <div className="flex items-center border-2 border-toy-primary/20 rounded-2xl overflow-hidden bg-white shadow-sm">
                     <button
                       onClick={decreaseQuantity}
-                      className="px-3 py-2 bg-gray-200 hover:bg-gray-300"
+                      className="px-4 py-2 bg-slate-50 hover:bg-toy-primary hover:text-white transition-colors font-bold text-lg"
                       disabled={quantity <= 1}
                     >
                       -
                     </button>
-                    <span className="px-4 py-2">{quantity}</span>
+                    <span className="px-6 py-2 font-bold text-slate-700">{quantity}</span>
                     <button
                       onClick={increaseQuantity}
-                      className="px-3 py-2 bg-gray-200 hover:bg-gray-300"
+                      className="px-4 py-2 bg-slate-50 hover:bg-toy-primary hover:text-white transition-colors font-bold text-lg"
                       disabled={availableQuantity <= 0}
                     >
                       +
@@ -158,41 +146,41 @@ const ToysDetails = () => {
 
                   <button
                     onClick={handleAddToCart}
-                    className="flex-1 bg-[#c9184a] hover:bg-red-500 text-white font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95"
+                    className="flex-1 bg-toy-secondary hover:bg-toy-secondary/90 text-white font-extrabold py-3.5 rounded-2xl shadow-md shadow-toy-secondary/20 hover:shadow-lg transition-all active:scale-95 uppercase tracking-wide"
                     disabled={
                       quantity > availableQuantity + quantity - 1 ||
                       availableQuantity <= 0
                     }
                   >
-                    ADD TO CART
+                    Add to Cart
                   </button>
                 </div>
 
                 {/* Info Boxes */}
-                <div className="flex flex-col sm:flex-row gap-4 mt-4">
-                  <div className="flex-1 border border-dashed rounded-2xl p-4 text-center">
-                    <p className="flex flex-col items-center font-semibold mt-2 p-2">
-                      <FaRegCircleCheck size={30} />
+                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                  <div className="flex-1 border-2 border-dashed border-toy-mint/40 bg-toy-mint/5 rounded-2xl p-4 text-center hover:bg-toy-mint/10 transition-colors">
+                    <p className="flex flex-col items-center font-bold text-sm text-slate-700 mt-2 p-2">
+                      <FaRegCircleCheck className="text-toy-mint mb-2" size={28} />
                       PREMIUM QUALITY
                     </p>
                   </div>
-                  <div className="flex-1 border border-dashed rounded-2xl p-4 text-center">
-                    <p className="flex flex-col items-center font-semibold mt-2 p-2">
-                      <FaChildren size={30} />
-                      AGE-APPROPRIATE DESIGN
+                  <div className="flex-1 border-2 border-dashed border-toy-primary/40 bg-toy-primary/5 rounded-2xl p-4 text-center hover:bg-toy-primary/10 transition-colors">
+                    <p className="flex flex-col items-center font-bold text-sm text-slate-700 mt-2 p-2">
+                      <FaChildren className="text-toy-primary mb-2" size={28} />
+                      AGE-APPROPRIATE
                     </p>
                   </div>
-                  <div className="flex-1 border border-dashed rounded-2xl p-4 text-center">
-                    <p className="flex flex-col items-center font-semibold mt-2 p-2">
-                      <FaShippingFast size={30} />
-                      FREE <br /> SHIPPING
+                  <div className="flex-1 border-2 border-dashed border-toy-yellow/40 bg-toy-yellow/5 rounded-2xl p-4 text-center hover:bg-toy-yellow/10 transition-colors">
+                    <p className="flex flex-col items-center font-bold text-sm text-slate-700 mt-2 p-2">
+                      <FaShippingFast className="text-toy-yellow mb-2" size={28} />
+                      FREE SHIPPING
                     </p>
                   </div>
                 </div>
 
                 {/* Try Now Form */}
-                <div className="mt-6 bg-gray-50 p-6 rounded-2xl shadow-inner">
-                  <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">
+                <div className="mt-8 bg-white border border-slate-100 p-6 rounded-3xl shadow-sm">
+                  <h2 className="text-lg font-bold mb-4 text-slate-800 text-center uppercase tracking-wide">
                     Try Now
                   </h2>
                   <form
@@ -201,51 +189,51 @@ const ToysDetails = () => {
                   >
                     <input
                       type="text"
-                      placeholder="Name"
+                      placeholder="Your Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[#1976d2]"
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 focus:outline-none focus:border-toy-primary focus:ring-2 focus:ring-toy-primary/20 transition-all font-medium text-slate-700 placeholder-slate-400"
                       required
                     />
                     <input
                       type="email"
-                      placeholder="Email"
+                      placeholder="Your Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-[#1976d2]"
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 focus:outline-none focus:border-toy-primary focus:ring-2 focus:ring-toy-primary/20 transition-all font-medium text-slate-700 placeholder-slate-400"
                       required
                     />
                     <button
                       type="submit"
-                      className="bg-[#1976d2] text-white rounded-lg py-3 font-semibold hover:bg-[#1565c0] transition-colors"
+                      className="bg-toy-primary text-white rounded-xl py-3.5 font-extrabold hover:bg-toy-primary/95 transition-all shadow-md shadow-toy-primary/20 active:scale-95"
                     >
-                      Try Now
+                      Request Trial
                     </button>
                   </form>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="mt-6 bg-gray-50 p-6 rounded-2xl shadow-inner">
-                <h2 className="text-lg font-semibold mb-2 text-gray-800">
+              <div className="mt-6 bg-white border border-slate-100 p-6 rounded-3xl shadow-sm">
+                <h2 className="text-lg font-bold mb-3 text-slate-800 uppercase tracking-wide">
                   Product Details
                 </h2>
-                <p className="text-gray-600">{toy.description}</p>
+                <p className="text-slate-600 leading-relaxed font-medium text-sm">{toy.description}</p>
               </div>
             </div>
 
             <button
               onClick={() => navigate(-1)}
-              className="w-full flex items-center justify-center gap-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-2xl shadow-md transition-transform active:scale-95 mt-4"
+              className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-2xl transition-all active:scale-95 mt-6 border border-slate-200"
             >
               <IoMdArrowRoundBack size={20} />
-              Back to this toys category
+              Back to Catalog
             </button>
           </div>
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

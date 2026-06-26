@@ -38,7 +38,7 @@ const Loading = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center py-20 min-h-[300px] w-full">
+    <div className="flex flex-col gap-2 justify-center items-center py-20 min-h-[60vh] w-full">
       <motion.div
         className="flex gap-4 h-16 items-center justify-center"
         variants={containerVariants}

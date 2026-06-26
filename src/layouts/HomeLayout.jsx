@@ -7,6 +7,7 @@ import Topside from "../components/homelayout/Topside";
 import Footer from "../components/Footer";
 import { Helmet } from "react-helmet-async";
 import Loading from "../pages/Loading";
+import ScrollToTop from "../components/ScrollToTop";
 import { motion, AnimatePresence } from "framer-motion";
 
 const HomeLayout = () => {
@@ -32,10 +33,11 @@ const HomeLayout = () => {
     }
   }, [location]);
 
-  const isHome = location.pathname === "/" || location.pathname.startsWith("/categories");
+  const isHome = location.pathname === "/";
 
   return (
     <div className="bg-[#f8f9ff] min-h-screen flex flex-col justify-between relative overflow-hidden">
+      <ScrollToTop />
       {/* Background Decorative Blobs */}
       <div className="absolute top-24 left-[-100px] w-96 h-96 rounded-full bg-toy-primary/10 blur-3xl pointer-events-none animate-float-slow z-0"></div>
       <div className="absolute top-[400px] right-[-100px] w-96 h-96 rounded-full bg-toy-secondary/10 blur-3xl pointer-events-none animate-float-reverse z-0"></div>
@@ -45,7 +47,7 @@ const HomeLayout = () => {
         <title>{pageTitle}</title>
       </Helmet>
 
-      <header className="w-full relative z-10">
+      <header className="w-full relative z-50">
         <Header />
       </header>
 
