@@ -65,7 +65,7 @@ const Login = () => {
               className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6 drop-shadow-lg"
             >
               Unleash <br/><span className="text-toy-yellow">Imagination.</span>
-            </form>
+            </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

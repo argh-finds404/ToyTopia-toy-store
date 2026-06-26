@@ -6,13 +6,13 @@ ToyTopia is a modern, user-friendly web application built for toy lovers and par
 
 ## 🌐 Live Demo
 
-👉 **Live URL:**: https://toytopia-spa.web.app
+👉 **Live URL:** [https://super-bublanina-681db1.netlify.app/](https://super-bublanina-681db1.netlify.app/)
 
 
 ---
 
 ## 🎯 Project Purpose
-
+the >>
 ToyTopia is designed to showcase a **full-stack React web application** using Firebase for authentication and data storage.  
 The main objectives of this project are to:
 - Provide a simple and attractive toy marketplace UI.
@@ -53,12 +53,22 @@ The main objectives of this project are to:
 - Dynamic page titles with **React Helmet Async**.
 - Scrolling text banners using **React Fast Marquee**.
 
+✅ **Gamified Arcade & Endless Trivia**
+- Play 3D Memory Match and earn "ToyTopia Points" (TP) saved via `localStorage`.
+- Endless Toy Trivia minigame powered by the **OpenTDB API** with automatic HTML entity decoding and floating score animations.
 
+✅ **Premium UI Architecture**
+- High-end Glassmorphism elements.
+- Split-screen animated Auth pages with dynamic floating 3D icons powered by **Framer Motion**.
+- Interactive Competitions board with smooth submission modals.
 
-✅ **Valid Links**
-- Only the **Home** and **Wishlist** are validate for navlink
-- rest of the links are dummy in navbar
-
+✅ **Fully Functional Routing**
+All navigation links in the Navbar and Drawer are fully operational! We have upgraded the app to include dedicated, customized pages for:
+- **All Toys (`/categories`):** A comprehensive catalog.
+- **Games Arcade (`/games`):** Play minigames and earn points.
+- **Competitions (`/competitions`):** Participate in fun challenges.
+- **About Us, Blog, Contact, & Track Order:** Rich, informative standalone pages.
+- **Profile & Auth:** Seamless routing for user management.
 ---
 
 ## 🧩 Tech Stack & NPM Packages Used

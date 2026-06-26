@@ -112,6 +112,20 @@ const ToysDetails = () => {
                 {toy.toyName}
               </h1>
               <p className="text-gray-500 text-sm mt-1">{toy.subCategory}</p>
+
+              {/* Price & Rating */}
+              <div className="flex items-center mt-4 space-x-4">
+                <div className="bg-green-50 text-green-700 font-bold px-4 py-2 rounded-xl shadow-inner">
+                  ${toy.price}
+                </div>
+                <div className="flex items-center gap-1.5 bg-yellow-50 text-yellow-700 px-3 py-2 rounded-xl shadow-inner font-semibold">
+                  <FaStar className="text-toy-yellow" /> {toy.rating}
+                </div>
+              </div>
+
+              {/* Seller Info */}
+              <div className="mt-5 space-y-1 text-gray-700">
+                <p>
                   <span className="font-semibold">Seller:</span>{" "}
                   {toy.sellerName} ({toy.sellerEmail})
                 </p>

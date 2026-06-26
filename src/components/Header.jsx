@@ -18,7 +18,7 @@ import { db } from "../firebase/firebase.config";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 const Header = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, loading } = useContext(AuthContext);
   const [wishlistCount, setWishlistCount] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -198,7 +198,12 @@ const Header = () => {
 
       {/* Right - User / Auth */}
       <div className="navbar-end flex items-center gap-3">
-        {user ? (
+        {loading ? (
+          <div className="animate-pulse flex space-x-4">
+            <div className="rounded-full bg-slate-200 h-10 w-10"></div>
+            <div className="h-10 w-20 bg-slate-200 rounded-xl"></div>
+          </div>
+        ) : user ? (
           <>
             {/* Avatar with hover name */}
             <div className="relative group">
